@@ -1,5 +1,5 @@
 module.exports = {
-  teacherOptions: {
+  studentOptions: {
     reply_markup: JSON.stringify({
       inline_keyboard: [
         [
@@ -15,6 +15,14 @@ module.exports = {
             callback_data: 'messageForTeacher',
           },
         ],
+        [{ text: 'Вернуться', callback_data: 'back' }],
+      ],
+    }),
+  },
+  teacherOptions: {
+    reply_markup: JSON.stringify({
+      inline_keyboard: [
+        [{ text: 'Список моих студентов', callback_data: 'listOfStudents' }],
         [{ text: 'Вернуться', callback_data: 'back' }],
       ],
     }),
