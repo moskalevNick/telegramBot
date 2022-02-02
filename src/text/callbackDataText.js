@@ -1,0 +1,17 @@
+module.exports = {
+    lessonsLeft: 'lessonsLeft',
+    teacherName: 'teacherName',
+    messageForTeacher: 'messageForTeacher',
+    listOfStudents: 'listOfStudents',
+    russianSpeaker: 'russianSpeaker',
+    nativeSpeaker: 'nativeSpeaker',
+    groupsRussian: 'groupsRussian',
+    individualRussian: 'individualRussian',
+    individualNative: 'individualNative',
+    pairsRussian: 'pairsRussian',
+    pairsNative: 'pairsNative',
+    moralSupport: 'moralSupport',
+    communicationRequest: 'communicationRequest',
+    teachers: 'teachers',
+    back: 'back',
+}
