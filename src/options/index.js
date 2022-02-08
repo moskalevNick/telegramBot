@@ -185,6 +185,21 @@ const teacherStudentOptions = (chatId) => ({
   }),
 });
 
+const sendPhoneOptions = {
+  parse_mode: 'Markdown',
+  reply_markup: {
+    one_time_keyboard: true,
+    keyboard: [
+      [
+        {
+          text: 'Отправить мой номер телефона',
+          request_contact: true,
+        },
+      ],
+    ],
+  },
+};
+
 const gradeLesson = {
   reply_markup: JSON.stringify({
     inline_keyboard: [
@@ -255,6 +270,7 @@ module.exports = {
   packsNative,
   supportOptions,
   teacherStudentOptions,
-  gradeLesson /* 
+  gradeLesson,
+  sendPhoneOptions /* 
   formOfHomeWork, */,
 };

@@ -55,10 +55,10 @@ const callbackQueryHandler = async (msg) => {
     bot.sendMessage(chatId, 'следующее сообщение будет доставлено ученику:');
 
     bot.on('message', (msg) => {
-      bot.sendMessage(chatIdNikolay, `hw ${msg.document}`);
+      //bot.sendMessage(chatIdNikolay, `hw ${msg.document}`);
       console.log('document', msg);
-      bot.removeAllListeners('message');
-      start();
+      //bot.removeAllListeners('message');
+      //start();
     });
 
     /*  bot.on('photo', (msg) => {
