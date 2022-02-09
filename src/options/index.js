@@ -200,6 +200,31 @@ const sendPhoneOptions = {
   },
 };
 
+/* const defaultOptions = {
+  reply_markup: JSON.stringify({
+    inline_keyboard: [
+      [
+        {
+          text: 'Стоимость обучения',
+          callback_data: teachers,
+        },
+      ],
+      [
+        {
+          text: 'Реквизиты для оплаты',
+          callback_data: requisites,
+        },
+      ],
+      [
+        {
+          text: 'Техподдержка',
+          callback_data: support,
+        },
+      ],
+    ],
+  }),
+}; */
+
 const gradeLesson = {
   reply_markup: JSON.stringify({
     inline_keyboard: [
@@ -271,6 +296,7 @@ module.exports = {
   supportOptions,
   teacherStudentOptions,
   gradeLesson,
-  sendPhoneOptions /* 
-  formOfHomeWork, */,
+  sendPhoneOptions,
+  /* 
+  formOfHomeWork, */
 };

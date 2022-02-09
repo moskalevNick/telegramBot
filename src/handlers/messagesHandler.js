@@ -4,6 +4,7 @@ const {
   teachers,
   supportOptions,
   sendPhoneOptions,
+  defaultOptions,
 } = require('../options/index');
 const { roles } = require('../config');
 const getRole = require('./rolesHandler');
@@ -51,31 +52,28 @@ const messagesHandler = async (msg) => {
   }
 
   if (text === '/freelesson') {
-    const freeLesson = () => {
+    bot.sendMessage(
+      chatIdNikolay,
+      `Пользователь ${msg.from.first_name} ${
+        msg.from.last_name ? msg.from.last_name : ''
+      } (никнейм: ${msg.from.username}) хочет пробный урок`
+    );
+    bot.sendMessage(
+      chatId,
+      `Ваша заявка сформирована, с вами свяжутся, для ускорения процесса можете оставить номер телефона, по которому можно связаться`,
+      sendPhoneOptions
+    );
+
+    bot.on('message', (msg) => {
       bot.sendMessage(
         chatIdNikolay,
-        `Пользователь ${msg.from.first_name} ${
-          msg.from.last_name ? msg.from.last_name : ''
-        } (никнейм: ${msg.from.username}) хочет пробный урок`
+        `Пользователь ${msg.contact.first_name} написал вам телефон для связи: +${msg.contact.phone_number}`
       );
-      bot.sendMessage(
-        chatId,
-        `Ваша заявка сформирована, с вами свяжутся, для ускорения процесса можете оставить номер телефона, по которому можно связаться`,
-        sendPhoneOptions
-      );
+      bot.removeAllListeners('message');
 
-      bot.on('message', (msg) => {
-        bot.sendMessage(
-          chatIdNikolay,
-          `Пользователь ${msg.contact.first_name} написал вам телефон для связи: +${msg.contact.phone_number}`
-        );
-        bot.removeListener('message', freeLesson);
-        //start();
-        return bot.sendMessage(chatId, 'спасибо, мы скоро свяжемся с вами');
-      });
+      bot.sendMessage(chatId, 'спасибо, мы скоро свяжемся с вами');
       return;
-    };
-    freeLesson();
+    });
     return;
   }
 
