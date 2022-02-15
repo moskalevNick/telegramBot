@@ -5,10 +5,13 @@ const {
   teachers,
   teacherStudentOptions,
   gradeLesson,
+  sendPhoneOptions,
+  requestFreeLessonOnly,
   formOfHomeWork,
 } = require('../options/index');
 const bot = require('../services/bot');
-const { getTeacherById } = require('../services/user');
+const messagesHandler = require('./messagesHandler');
+const { getTeacherById, getStudentById } = require('../services/user');
 
 const chatIdNikolay = 108758719;
 
@@ -94,14 +97,46 @@ const callbackQueryHandler = async (msg) => {
   } else {
     switch (data) {
       case 'teacherName': {
+        const student = await getStudentById(msg.from.id);
+        const currentTeacher = await getTeacherById(student.teacherId);
         return bot.sendMessage(
           chatId,
-          `вашего преподавателя зовут Пупа Луповна`
+          `вашего преподавателя зовут ${currentTeacher.name}`
         );
       }
 
       case 'lessonsLeft': {
-        return bot.sendMessage(chatId, `у вас осталось 7 уроков`);
+        const student = await getStudentById(msg.from.id);
+        return bot.sendMessage(
+          chatId,
+          `у вас осталось ${student.lessonsLeft} уроков`
+        );
+      }
+
+      case 'messageForTeacher': {
+        bot.sendMessage(
+          chatId,
+          `следующее сообщение которое вы мне отправите будет автоматически переадресовано вашему преподавателю`
+        );
+
+        bot.on('message', (msg) => {
+          if (msg.text[0] !== '/') {
+            bot.sendMessage(
+              chatIdNikolay,
+              `Ученик ${msg.from.first_name} ${
+                msg.from.last_name ? msg.from.last_name : ''
+              } написал вам: \n ${msg.text}`
+            );
+            bot.sendMessage(
+              chatId,
+              'ваше сообщение успешно отправлено, скоро я вам пришлю ответ'
+            );
+            bot.removeAllListeners('message');
+            return bot.on('message', messagesHandler);
+          }
+          return;
+        });
+        return;
       }
 
       case 'moralSupport': {
@@ -117,28 +152,37 @@ const callbackQueryHandler = async (msg) => {
         );
       }
 
-      case 'messageForTeacher': {
+      case 'textFreeLesson': {
+        return bot.sendMessage(
+          chatId,
+          `Пробный урок проводится в режиме онлайн и длится не более 30 минут. Он включает в  себя знакомство со школой, определение текущего уровня владения языком посредством беседы, подбор программы, рекомендации по дальнейшему обучению и обсуждение организационных вопросов.`,
+          requestFreeLessonOnly
+        );
+      }
+
+      case 'requestFreeLesson': {
+        bot.sendMessage(
+          chatIdNikolay,
+          `Пользователь ${msg.from.first_name} ${
+            msg.from.last_name ? msg.from.last_name : ''
+          } (никнейм: ${msg.from.username}) хочет пробный урок`
+        );
         bot.sendMessage(
           chatId,
-          `следующее сообщение которое вы мне отправите будет автоматически переадресовано вашему преподавателю`
+          `Ваша заявка сформирована, с вами свяжутся, для ускорения процесса можете оставить номер телефона, по которому можно связаться`,
+          sendPhoneOptions
         );
 
         bot.on('message', (msg) => {
-          if (msg.text[0] !== '/') {
-            bot.sendMessage(
-              chatIdNikolay,
-              `Пользователь ${msg.from.first_name} ${
-                msg.from.last_name ? msg.from.last_name : ''
-              } написал вам: \n ${msg.text}`
-            );
-            bot.sendMessage(
-              chatId,
-              'ваше сообщение успешно отправлено, скоро я вам пришлю ответ',
-              teacherOptions
-            );
-            bot.removeAllListeners('message');
-            start();
-          }
+          bot.sendMessage(
+            chatIdNikolay,
+            `Пользователь ${msg.contact.first_name} написал вам телефон для связи: +${msg.contact.phone_number}`
+          );
+          bot.removeAllListeners('message');
+
+          bot.sendMessage(chatId, 'спасибо, мы скоро свяжемся с вами');
+          bot.on('message', messagesHandler);
+          return;
         });
         return;
       }
@@ -253,7 +297,6 @@ const callbackQueryHandler = async (msg) => {
       }
 
       default: {
-        // console.log(data);
         return;
       }
     }

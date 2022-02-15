@@ -13,5 +13,7 @@ module.exports = {
   moralSupport: 'moralSupport',
   communicationRequest: 'communicationRequest',
   teachers: 'teachers',
+  textFreeLesson: 'textFreeLesson',
+  requestFreeLesson: 'requestFreeLesson',
   back: 'back',
 };

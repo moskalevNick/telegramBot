@@ -3,7 +3,7 @@ const {
   teacherOptions,
   teachers,
   supportOptions,
-  sendPhoneOptions,
+  freeLessonOptions,
   defaultOptions,
 } = require('../options/index');
 const { roles } = require('../config');
@@ -34,9 +34,9 @@ const messagesHandler = async (msg) => {
   if (text === '/start') {
     return bot.sendMessage(
       chatId,
-      `Добро пожаловать ${msg.from.first_name} ${
+      `${msg.from.first_name} ${
         msg.from.last_name ? msg.from.last_name : ''
-      } выберите из опций что хотите узнать`
+      } вас приветствует бот онлайн-школы NewSkill. \nБудем рады помочь!`
     );
   }
 
@@ -52,34 +52,17 @@ const messagesHandler = async (msg) => {
   }
 
   if (text === '/freelesson') {
-    bot.sendMessage(
-      chatIdNikolay,
-      `Пользователь ${msg.from.first_name} ${
-        msg.from.last_name ? msg.from.last_name : ''
-      } (никнейм: ${msg.from.username}) хочет пробный урок`
-    );
-    bot.sendMessage(
-      chatId,
-      `Ваша заявка сформирована, с вами свяжутся, для ускорения процесса можете оставить номер телефона, по которому можно связаться`,
-      sendPhoneOptions
-    );
-
-    bot.on('message', (msg) => {
-      bot.sendMessage(
-        chatIdNikolay,
-        `Пользователь ${msg.contact.first_name} написал вам телефон для связи: +${msg.contact.phone_number}`
-      );
-      bot.removeAllListeners('message');
-
-      bot.sendMessage(chatId, 'спасибо, мы скоро свяжемся с вами');
-      return;
-    });
-    return;
+    return bot.sendMessage(chatId, 'Выберите опцию:', freeLessonOptions);
   }
 
   if (text === '/support') {
     return bot.sendMessage(chatId, 'Мы ответим быстро', supportOptions);
   }
+
+  return bot.sendMessage(
+    chatId,
+    `Я вас не понимаю, выберите опцию из предложенных`
+  );
 };
 
 module.exports = messagesHandler;

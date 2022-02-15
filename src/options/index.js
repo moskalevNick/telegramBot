@@ -14,6 +14,8 @@ const {
   communicationRequest,
   individualNative,
   pairsNative,
+  textFreeLesson,
+  requestFreeLesson,
 } = require('../text/callbackDataText');
 
 const studentOptions = {
@@ -185,6 +187,38 @@ const teacherStudentOptions = (chatId) => ({
   }),
 });
 
+const freeLessonOptions = {
+  reply_markup: JSON.stringify({
+    inline_keyboard: [
+      [
+        {
+          text: 'Что представляет собой пробный урок?',
+          callback_data: textFreeLesson,
+        },
+      ],
+      [
+        {
+          text: 'Записаться на пробный урок',
+          callback_data: requestFreeLesson,
+        },
+      ],
+    ],
+  }),
+};
+
+const requestFreeLessonOnly = {
+  reply_markup: JSON.stringify({
+    inline_keyboard: [
+      [
+        {
+          text: 'Записаться на пробный урок',
+          callback_data: requestFreeLesson,
+        },
+      ],
+    ],
+  }),
+};
+
 const sendPhoneOptions = {
   parse_mode: 'Markdown',
   reply_markup: {
@@ -297,6 +331,8 @@ module.exports = {
   teacherStudentOptions,
   gradeLesson,
   sendPhoneOptions,
+  freeLessonOptions,
+  requestFreeLessonOnly,
   /* 
   formOfHomeWork, */
 };
