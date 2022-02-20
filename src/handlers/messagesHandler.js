@@ -24,7 +24,7 @@ const messagesHandler = async (msg) => {
       chatId,
       `${msg.from.first_name} ${
         msg.from.last_name ? msg.from.last_name : ''
-      } вас приветствует бот онлайн-школы NewSkill. \nБудем рады помочь!`
+      }, Вас приветствует бот онлайн-школы иностранных языков NewSkill. \nБудем рады помочь!`
     );
   }
 
