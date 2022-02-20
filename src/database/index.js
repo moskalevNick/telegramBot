@@ -11,6 +11,6 @@ const setDbConnection = async () => {
   } catch (e) {
     console.log(e);
   }
-}
+};
 
 module.exports = setDbConnection;

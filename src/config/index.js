@@ -1,8 +1,10 @@
-require('dotenv').config;
-const port = process.env.PORT || 3000;
+const getConfig = require('dotenv').config;
+
+const config = getConfig().parsed;
+
 module.exports = {
-  dbUrl: process.env.DB_URL || '',
-  tgApiKey: process.env.TG_API_KEY || '',
+  dbUrl: config.DB_URL,
+  tgApiKey: config.TG_API_KEY,
   roles: {
     visitor: 'visitor',
     teacher: 'teacher',
