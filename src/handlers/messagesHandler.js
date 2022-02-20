@@ -19,6 +19,15 @@ const messagesHandler = async (msg) => {
 
   const role = await getRole(msg);
 
+  if (text === '/start') {
+    return bot.sendMessage(
+      chatId,
+      `${msg.from.first_name} ${
+        msg.from.last_name ? msg.from.last_name : ''
+      } вас приветствует бот онлайн-школы NewSkill. \nБудем рады помочь!`
+    );
+  }
+
   if (text === '/teachers_menu' && role === roles.teacher) {
     return bot.sendMessage(chatId, 'Выберите опцию учителя:', teacherOptions);
   } else if (text === '/teachers_menu') {
@@ -29,15 +38,6 @@ const messagesHandler = async (msg) => {
     return bot.sendMessage(chatId, 'Выберите опцию учителя:', studentOptions);
   } else if (text === '/students_menu') {
     return bot.sendMessage(chatId, 'у вас недостаточно прав');
-  }
-
-  if (text === '/start') {
-    return bot.sendMessage(
-      chatId,
-      `${msg.from.first_name} ${
-        msg.from.last_name ? msg.from.last_name : ''
-      } вас приветствует бот онлайн-школы NewSkill. \nБудем рады помочь!`
-    );
   }
 
   if (text === '/price') {
@@ -59,10 +59,7 @@ const messagesHandler = async (msg) => {
     return bot.sendMessage(chatId, 'Мы ответим быстро', supportOptions);
   }
 
-  return bot.sendMessage(
-    chatId,
-    `Я вас не понимаю, выберите опцию из предложенных`
-  );
+  return bot.sendMessage(chatId, `Выберите опцию из предложенных`);
 };
 
 module.exports = messagesHandler;
