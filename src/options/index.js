@@ -83,6 +83,12 @@ const teachersOptions = {
           callback_data: nativeSpeaker,
         },
       ],
+      [
+        {
+          text: 'Вернуться',
+          callback_data: back,
+        },
+      ],
     ],
   }),
 };
@@ -114,6 +120,12 @@ const packsRussian = {
           callback_data: teachers,
         },
       ],
+      [
+        {
+          text: 'Вернуться в меню',
+          callback_data: back,
+        },
+      ],
     ],
   }),
 };
@@ -137,6 +149,12 @@ const packsNative = {
         {
           text: 'Сменить преподавателя',
           callback_data: teachers,
+        },
+      ],
+      [
+        {
+          text: 'Вернуться в меню',
+          callback_data: back,
         },
       ],
     ],
@@ -202,6 +220,12 @@ const freeLessonOptions = {
           callback_data: requestFreeLesson,
         },
       ],
+      [
+        {
+          text: 'Вернуться в меню',
+          callback_data: back,
+        },
+      ],
     ],
   }),
 };
@@ -215,8 +239,20 @@ const requestFreeLessonOnly = {
           callback_data: requestFreeLesson,
         },
       ],
+      [
+        {
+          text: 'Вернуться в меню',
+          callback_data: back,
+        },
+      ],
     ],
   }),
+};
+
+const removeKeyboard = {
+  reply_markup: {
+    remove_keyboard: true,
+  },
 };
 
 const sendPhoneOptions = {
@@ -333,6 +369,7 @@ module.exports = {
   sendPhoneOptions,
   freeLessonOptions,
   requestFreeLessonOnly,
+  removeKeyboard,
   /* 
   formOfHomeWork, */
 };

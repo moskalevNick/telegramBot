@@ -7,6 +7,7 @@ const {
   gradeLesson,
   sendPhoneOptions,
   requestFreeLessonOnly,
+  removeKeyboard,
   formOfHomeWork,
 } = require('../options/index');
 const bot = require('../services/bot');
@@ -186,9 +187,14 @@ const callbackQueryHandler = async (msg) => {
           chatIdAlesya,
           `Пользователь ${msg.contact.first_name} написал вам телефон для связи: +${msg.contact.phone_number}`
         );
+
         bot.removeAllListeners('message');
 
-        bot.sendMessage(chatId, 'спасибо, мы скоро свяжемся с вами');
+        bot.sendMessage(
+          chatId,
+          'спасибо, мы скоро свяжемся с вами',
+          removeKeyboard
+        );
         bot.on('message', messagesHandler);
         return;
       });
